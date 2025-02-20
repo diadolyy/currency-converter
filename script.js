@@ -17,33 +17,53 @@ document.getElementById("loadBtn").addEventListener("click", async function() {
     }
 });
 
-document.getElementById("userForm").addEventListener("submit", function(event){
-    event.preventDefault();
+document.getElementById("userForm").addEventListener("submit", async function(event){
+    event.preventDefault();//отменяем стандартное поведение формы
 
     const name=document.getElementById("name").value;
     const email=document.getElementById("email").value;
+    const tel=document.getElementById("tel").value;
+    const gender=document.querySelector('input[name="gender"]:checked');
+    const terms=document.querySelector('input[name="terms"]:checked');
 
+    //валидация
+    if(!name || !email || !tel || !gender || !terms){
+        alert("Заполните все поля.");
+        return;
+    }
+
+    //формируем объект с данными 
     const userData={
         name: name,
-        email:email
+        email:email,
+        tel:tel,
+        gender:gender.value,
+        terms:terms.checked
     };
 
-    fetch("https://jsonplaceholder.typicode.com/posts", {
+    if(!email || !/\S+@\S+\.\S+/.test(email)){
+        alert("Введите корректный email.");
+        return;
+    }
+
+    //отправка данных
+    try{
+        const response= await fetch("https://jsonplaceholder.typicode.com/posts", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
         },
         body: JSON.stringify(userData)
-    })
-    .then(response=>response.json())
-    .then(data=>{
+    });
+
+    const data=await response.json();
+
         document.getElementById("response").innerHTML="Данные отправлены успешно!";
         console.log("Ответ от сервера:", data);
 
-    })
-    .catch(error=>{
+    }catch(error){
         document.getElementById("response").innerHTML="Произошла ошибка!";
         console.error("Ошибка:", error);
-    })
+    }
 
 })

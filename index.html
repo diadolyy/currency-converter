@@ -18,6 +18,21 @@
             
             <label for="email">Электронная почта:</label>
             <input type="email" id="email" name="email" required>
+
+            <label for="tel">Телефон:</label>
+            <input type="tel" id="tel" name="tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" placeholder="XXX-XXX-XXXX" required>
+
+            <label>Пол:</label>
+            <label>
+                <input type="radio" name="gender" value="male">Мужской
+            </label>
+            <label>
+                <input type="radio" name="gender" value="female">Женский
+            </label>
+
+            <label>
+                <input type="checkbox" name="terms" required>Я согласен с условиями
+            </label>
             
             <button type="submit">Отправить</button>
           </form>
