@@ -11,4 +11,24 @@ async function fetchRates(){
     }
 }
 
+async function fetchNews(){
+    const apiKey= "7ce82925c44946b78f3a7d04bd9c9891";
+    const url=`https://newsapi.org/v2/everything?q=currency&apiKey=${apiKey}`;
+
+    try{
+        const response=await fetch(url);
+        const data= await response.json();
+
+        if(data.status !== 'ok'){
+            throw new Error('Не удалось загрузить новости');
+        }
+
+        return data.articles;
+    }catch(error){
+        console.error('Ошибка при получении новостей', error);
+        return [];
+    }
+}
+
+export {fetchNews};
 export {fetchRates};

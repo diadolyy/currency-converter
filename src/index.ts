@@ -1,4 +1,4 @@
-import { fetchRates } from "./api.js";
+import { fetchRates, fetchNews } from "./api.js";
 
 document.addEventListener("DOMContentLoaded", async function() {
     const amountInput= <HTMLInputElement>document.getElementById("amount");
@@ -35,5 +35,36 @@ document.addEventListener("DOMContentLoaded", async function() {
     amountInput.addEventListener("input", convertCurrency);
     fromCurrency.addEventListener("change", convertCurrency);
     toCurrency.addEventListener("change", convertCurrency);
+
+    // вывод новостей на экран
+    async function displayNews(){
+        const newsList= <HTMLUListElement>document.getElementById("newsList");
+        const articles=await fetchNews();
+        interface Article{
+            title: string;
+            description: string | null;
+            url: string;
+        }
+
+        if(articles.length ==0){
+            newsList.innerHTML='<li>Новостей не найдено</li>';
+            return;
+        }
+
+        newsList.innerHTML=''; //очищение предыдущих новостей
+
+        articles.foreach((article:Article) => {
+            const li=<HTMLLIElement>document.createElement('li');
+            li.innerHTML=`
+            <a href="${article.url}" target="_blank">${article.title}</a>
+            <p>${article.description || "Нет описания"}</p>
+            `;
+            newsList.appendChild(li);
+        });
+    }
+    displayNews();
+
+    const refreshNewsButton= <HTMLButtonElement>document.getElementById("refreshNews");
+    refreshNewsButton.addEventListener("click", displayNews);
     
 })
