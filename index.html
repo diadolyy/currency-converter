@@ -3,43 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Асинхронный запрос</title>
+    <title>Калькулятор валют</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <header>
+        <h1>Калькулятор валют</h1>
+    </header>
     <main>
-        <button id="loadBtn">Загрузить пользователей</button>
-        <div id="userList"></div>
-        <div id="loading">Загрузка...</div>
-
-        <form id="userForm">
-            <label for="name">Имя:</label>
-            <input type="text" id="name" name="name" required>
-            
-            <label for="email">Электронная почта:</label>
-            <input type="email" id="email" name="email" required>
-
-            <label for="tel">Телефон:</label>
-            <input type="tel" id="tel" name="tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" placeholder="XXX-XXX-XXXX" required>
-
-            <label>Пол:</label>
-            <label>
-                <input type="radio" name="gender" value="male">Мужской
-            </label>
-            <label>
-                <input type="radio" name="gender" value="female">Женский
-            </label>
-
-            <label>
-                <input type="checkbox" name="terms" required>Я согласен с условиями
-            </label>
-            
-            <button type="submit">Отправить</button>
-          </form>
-          <div id="response"></div>
+        <div class="converter">
+            <input type="number" id="amount" placeholder="Введите сумму">
+            <select id="fromCurrency"></select>
+            <span>⇄</span>
+            <p>Результат: <span id="result">0</span></p>
+        </div>
           
     </main>
-    
+    <footer></footer>
 
     <script src="script.js" ></script>
 
