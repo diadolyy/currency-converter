@@ -40,6 +40,8 @@ document.addEventListener("DOMContentLoaded", async function() {
     async function displayNews(){
         const newsList= <HTMLUListElement>document.getElementById("newsList");
         const articles=await fetchNews();
+        console.log(articles);
+        
         interface Article{
             title: string;
             description: string | null;
@@ -53,7 +55,7 @@ document.addEventListener("DOMContentLoaded", async function() {
 
         newsList.innerHTML=''; //очищение предыдущих новостей
 
-        articles.foreach((article:Article) => {
+        articles.forEach((article:Article) => {
             const li=<HTMLLIElement>document.createElement('li');
             li.innerHTML=`
             <a href="${article.url}" target="_blank">${article.title}</a>

@@ -21,4 +21,23 @@ function fetchRates() {
         }
     });
 }
+function fetchNews() {
+    return __awaiter(this, void 0, void 0, function* () {
+        const apiKey = "7ce82925c44946b78f3a7d04bd9c9891";
+        const url = "https://newsapi.org/v2//v2/top-headlines?&apiKey=7ce82925c44946b78f3a7d04bd9c9891";
+        try {
+            const response = yield fetch(url);
+            const data = yield response.json();
+            if (data.status !== 'ok') {
+                throw new Error('Не удалось загрузить новости');
+            }
+            return data.articles;
+        }
+        catch (error) {
+            console.error('Ошибка при получении новостей', error);
+            return [];
+        }
+    });
+}
+export { fetchNews };
 export { fetchRates };

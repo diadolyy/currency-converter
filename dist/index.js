@@ -7,7 +7,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { fetchRates } from "./api.js";
+import { fetchRates, fetchNews } from "./api.js";
 document.addEventListener("DOMContentLoaded", function () {
     return __awaiter(this, void 0, void 0, function* () {
         const amountInput = document.getElementById("amount");
@@ -39,5 +39,29 @@ document.addEventListener("DOMContentLoaded", function () {
         amountInput.addEventListener("input", convertCurrency);
         fromCurrency.addEventListener("change", convertCurrency);
         toCurrency.addEventListener("change", convertCurrency);
+        // вывод новостей на экран
+        function displayNews() {
+            return __awaiter(this, void 0, void 0, function* () {
+                const newsList = document.getElementById("newsList");
+                const articles = yield fetchNews();
+                console.log(articles);
+                if (articles.length == 0) {
+                    newsList.innerHTML = '<li>Новостей не найдено</li>';
+                    return;
+                }
+                newsList.innerHTML = ''; //очищение предыдущих новостей
+                articles.forEach((article) => {
+                    const li = document.createElement('li');
+                    li.innerHTML = `
+            <a href="${article.url}" target="_blank">${article.title}</a>
+            <p>${article.description || "Нет описания"}</p>
+            `;
+                    newsList.appendChild(li);
+                });
+            });
+        }
+        displayNews();
+        const refreshNewsButton = document.getElementById("refreshNews");
+        refreshNewsButton.addEventListener("click", displayNews);
     });
 });

@@ -13,7 +13,8 @@ async function fetchRates(){
 
 async function fetchNews(){
     const apiKey= "7ce82925c44946b78f3a7d04bd9c9891";
-    const url=`https://newsapi.org/v2/everything?q=currency&apiKey=${apiKey}`;
+    const url="https://newsapi.org/v2//v2/top-headlines?&apiKey=7ce82925c44946b78f3a7d04bd9c9891";
+
 
     try{
         const response=await fetch(url);
