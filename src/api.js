@@ -11,25 +11,25 @@ async function fetchRates(){
     }
 }
 
-async function fetchNews(){
-    const apiKey= "7ce82925c44946b78f3a7d04bd9c9891";
-    const url="https://newsapi.org/v2//v2/top-headlines?&apiKey=7ce82925c44946b78f3a7d04bd9c9891";
 
 
-    try{
-        const response=await fetch(url);
-        const data= await response.json();
 
-        if(data.status !== 'ok'){
-            throw new Error('Не удалось загрузить новости');
-        }
-
-        return data.articles;
-    }catch(error){
-        console.error('Ошибка при получении новостей', error);
-        return [];
+async function fetchHistoricalRates(base = "USD", target = "EUR") {
+    const url = `https://api.exchangerate.host/timeseries?start_date=${getDate(7)}&end_date=${getDate(0)}&base=${base}&symbols=${target}`;
+    try {
+        const response = await fetch(url);
+        const data = await response.json();
+        return data.rates;
+    } catch (error) {
+        console.error("Ошибка загрузки данных", error);
+        return null;
     }
 }
 
-export {fetchNews};
-export {fetchRates};
+function getDate(daysAgo) {
+    const date = new Date();
+    date.setDate(date.getDate() - daysAgo);
+    return date.toISOString().split("T")[0];
+}
+
+export {fetchRates, fetchHistoricalRates};

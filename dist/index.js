@@ -7,11 +7,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { fetchRates, fetchNews } from "./api.js";
+import { fetchRates } from "./api.js";
 document.addEventListener("DOMContentLoaded", function () {
     return __awaiter(this, void 0, void 0, function* () {
         const amountInput = document.getElementById("amount");
-        const fromCurrency = document.getElementById("fromCurrency");
+        const fromCurrency = (document.getElementById("fromCurrency"));
         const toCurrency = document.getElementById("toCurrency");
         const resultElement = document.getElementById("result");
         // Загружаем курсы валют
@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", function () {
         if (!rates)
             return;
         // Заполняем списки валют
-        Object.keys(rates).map(currency => {
+        Object.keys(rates).map((currency) => {
             fromCurrency.innerHTML += `<option value="${currency}">${currency}</option>`;
             toCurrency.innerHTML += `<option value="${currency}">${currency}</option>`;
         });
@@ -39,29 +39,47 @@ document.addEventListener("DOMContentLoaded", function () {
         amountInput.addEventListener("input", convertCurrency);
         fromCurrency.addEventListener("change", convertCurrency);
         toCurrency.addEventListener("change", convertCurrency);
-        // вывод новостей на экран
+        function fetchFinancialNews() {
+            return __awaiter(this, void 0, void 0, function* () {
+                try {
+                    const response = yield fetch("https://newsdata.io/api/1/news?apikey=pub_79380ae94951956d26e9541fd1c25352f3042&language=ru&category=business");
+                    const data = yield response.json();
+                    if (Array.isArray(data.results)) {
+                        return data.results;
+                    }
+                    else {
+                        console.error("Неверный формат данных:", data);
+                        return [];
+                    }
+                }
+                catch (error) {
+                    console.error("Ошибка при загрузке новостей:", error);
+                    return [];
+                }
+            });
+        }
         function displayNews() {
             return __awaiter(this, void 0, void 0, function* () {
+                const news = yield fetchFinancialNews();
                 const newsList = document.getElementById("newsList");
-                const articles = yield fetchNews();
-                console.log(articles);
-                if (articles.length == 0) {
-                    newsList.innerHTML = '<li>Новостей не найдено</li>';
+                if (!newsList)
                     return;
-                }
-                newsList.innerHTML = ''; //очищение предыдущих новостей
-                articles.forEach((article) => {
-                    const li = document.createElement('li');
+                newsList.innerHTML = ""; // очищаем список
+                news.slice(0, 5).forEach((article) => {
+                    const li = document.createElement("li");
                     li.innerHTML = `
-            <a href="${article.url}" target="_blank">${article.title}</a>
-            <p>${article.description || "Нет описания"}</p>
-            `;
+            <a href="${article.link}" target="_blank">${article.title}</a>
+            <p>${article.pubDate.split(" ")[0]}</p>
+          `;
                     newsList.appendChild(li);
                 });
             });
         }
         displayNews();
-        const refreshNewsButton = document.getElementById("refreshNews");
+        // Запускаем обновление каждые 10 минут
+        setInterval(displayNews, 10 * 60 * 1000);
+        const refreshNewsButton = (document.getElementById("refreshNews"));
         refreshNewsButton.addEventListener("click", displayNews);
     });
 });
+// Вызываем после выбора валют

@@ -21,23 +21,23 @@ function fetchRates() {
         }
     });
 }
-function fetchNews() {
-    return __awaiter(this, void 0, void 0, function* () {
-        const apiKey = "7ce82925c44946b78f3a7d04bd9c9891";
-        const url = "https://newsapi.org/v2//v2/top-headlines?&apiKey=7ce82925c44946b78f3a7d04bd9c9891";
+function fetchHistoricalRates() {
+    return __awaiter(this, arguments, void 0, function* (base = "USD", target = "EUR") {
+        const url = `https://api.exchangerate.host/timeseries?start_date=${getDate(7)}&end_date=${getDate(0)}&base=${base}&symbols=${target}`;
         try {
             const response = yield fetch(url);
             const data = yield response.json();
-            if (data.status !== 'ok') {
-                throw new Error('Не удалось загрузить новости');
-            }
-            return data.articles;
+            return data.rates;
         }
         catch (error) {
-            console.error('Ошибка при получении новостей', error);
-            return [];
+            console.error("Ошибка загрузки данных", error);
+            return null;
         }
     });
 }
-export { fetchNews };
-export { fetchRates };
+function getDate(daysAgo) {
+    const date = new Date();
+    date.setDate(date.getDate() - daysAgo);
+    return date.toISOString().split("T")[0];
+}
+export { fetchRates, fetchHistoricalRates };
