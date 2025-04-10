@@ -11,6 +11,7 @@
 ## 🛠️ Используемые технологии
 
 - TypeScript
+- React
 - HTML / CSS
 - [ExchangeRate API]
 
