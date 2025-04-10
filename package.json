@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/diadolyy/currency-converter#readme",
   "devDependencies": {
+    "@types/chart.js": "^2.9.41",
     "typescript": "^5.7.3"
   },
   "dependencies": {

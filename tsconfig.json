@@ -6,7 +6,8 @@
       "rootDir": "./src", // Папка с исходными TypeScript файлами
       "strict": true,  // Включаем строгую типизацию
       "esModuleInterop": true, // Для работы с модулями
-      "allowJs": true
+      "allowJs": true,
+      "moduleResolution": "node" 
     },
     "include": [
       "src/**/*"

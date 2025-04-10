@@ -39,6 +39,20 @@ document.addEventListener("DOMContentLoaded", function () {
         amountInput.addEventListener("input", convertCurrency);
         fromCurrency.addEventListener("change", convertCurrency);
         toCurrency.addEventListener("change", convertCurrency);
+        //быстрая конвертация
+        const convertButton = document.getElementById('convertButton');
+        document.querySelectorAll('.quick-convert button').forEach(button => {
+            button.addEventListener('click', () => {
+                const from = button.getAttribute('data-from');
+                const to = button.getAttribute('data-to');
+                if (from && to) {
+                    fromCurrency.value = from;
+                    toCurrency.value = to;
+                    amountInput.value = '1'; // Устанавливаем значение по умолчанию
+                    convertCurrency(); // Инициируем конвертацию
+                }
+            });
+        });
         function fetchFinancialNews() {
             return __awaiter(this, void 0, void 0, function* () {
                 try {

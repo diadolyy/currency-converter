@@ -1,33 +1,38 @@
 <!DOCTYPE html>
 <html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Калькулятор валют</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
     <header>
-        <h1>Калькулятор валют</h1>
+      <h1>Калькулятор валют</h1>
     </header>
     <main>
-        <div class="converter">
-            <input type="number" id="amount" placeholder="Введите сумму">
-            <select id="fromCurrency"></select>
-            <span>⇄</span>
-            <select id="toCurrency"></select>
-            <p>Результат: <span id="result">0</span></p>
-        </div>
-        <canvas id="currencyChart"></canvas>
-        <div id="newsSection">
-            <h2>Последние финансовые новости</h2>
-            <ul id="newsList"></ul>
-            <button id="refreshNews">Обновить новости</button>
-        </div>
+      <div class="converter">
+        <input type="number" id="amount" placeholder="Введите сумму" />
+        <select id="fromCurrency"></select>
+        <span>⇄</span>
+        <select id="toCurrency"></select>
+        <p>Результат: <span id="result">0</span></p>
+      </div>
+      <div class="quick-convert">
+        <button data-from="USD" data-to="RUB">USD → RUB</button>
+        <button data-from="EUR" data-to="USD">EUR → USD</button>
+        <button data-from="GEL" data-to="RUB">GEL → RUB</button>
+        <button data-from="USD" data-to="GEL">USD → GEL</button>
+      </div>
+
+      <div id="newsSection">
+        <h2>Последние финансовые новости</h2>
+        <ul id="newsList"></ul>
+        <button id="refreshNews">Обновить новости</button>
+      </div>
     </main>
     <footer></footer>
 
-    <script type="module" src="dist/index.js" ></script>
-
-</body>
+    <script type="module" src="dist/index.js"></script>
+  </body>
 </html>

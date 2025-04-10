@@ -1,4 +1,4 @@
-import { fetchRates, fetchHistoricalRates } from "./api.js";
+import { fetchRates} from "./api.js";
 
 document.addEventListener("DOMContentLoaded", async function () {
   const amountInput = <HTMLInputElement>document.getElementById("amount");
@@ -36,6 +36,25 @@ document.addEventListener("DOMContentLoaded", async function () {
   amountInput.addEventListener("input", convertCurrency);
   fromCurrency.addEventListener("change", convertCurrency);
   toCurrency.addEventListener("change", convertCurrency);
+
+  //быстрая конвертация
+  const convertButton = document.getElementById(
+    "convertButton"
+  ) as HTMLButtonElement;
+
+  document.querySelectorAll(".quick-convert button").forEach((button) => {
+    button.addEventListener("click", () => {
+      const from = button.getAttribute("data-from");
+      const to = button.getAttribute("data-to");
+
+      if (from && to) {
+        fromCurrency.value = from;
+        toCurrency.value = to;
+        amountInput.value = "1"; // Устанавливаем значение по умолчанию
+        convertCurrency(); // Инициируем конвертацию
+      }
+    });
+  });
 
   // вывод новостей на экран
   interface NewsArticle {
@@ -86,7 +105,7 @@ document.addEventListener("DOMContentLoaded", async function () {
   displayNews();
 
   // Запускаем обновление каждые 10 минут
-setInterval(displayNews, 10*60*1000);
+  setInterval(displayNews, 10 * 60 * 1000);
 
   const refreshNewsButton = <HTMLButtonElement>(
     document.getElementById("refreshNews")
